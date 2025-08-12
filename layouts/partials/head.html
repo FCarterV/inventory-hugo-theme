@@ -4,6 +4,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   {{ hugo.Generator }}
   <meta name="description" content="{{ .Title }} - {{ .Site.Title }} ">
+{{ if templates.Exists ( printf "partials/overrides/header.html" ) }}
+  {{ partial "partials/overrides/header.html" . }}
+{{ else }}
+  {{ "<!-- create /layouts/partials/overrides/header.html in your own theme or root directory to add your custom content here -->" | safeHTML }}
+{{ end }}
   
   {{ "<!-- ** CSS Plugins Needed for the Project ** -->" | safeHTML }}
   
@@ -66,12 +71,6 @@
 
 {{ template "_internal/google_analytics.html" . }}
   
-{{ if templates.Exists ( printf "partials/overrides/header.html" ) }}
-  {{ partial "partials/overrides/header.html" . }}
-{{ else }}
-  {{ "<!-- create /layouts/partials/overrides/header.html in your own theme or root directory to add your custom content here -->" | safeHTML }}
-{{ end }}
-
 
 <!-- Open Graph image and Twitter Card metadata -->
 {{ $image_path := .Params.image | default site.Params.image }}
